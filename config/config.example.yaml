@@ -1,0 +1,102 @@
+bot:
+  # 是否为沙箱环境
+  sandbox: true
+  # 指令前缀
+  command_prefix: "/"
+  # 机器人昵称（用于 /about）
+  name: "pyqbot"
+
+# 订阅的事件意图，参考 botpy.Intents
+intents:
+  public_guild_messages: true
+  direct_message: true
+  guild_messages: true
+  guild_members: true
+  public_messages: true
+
+log:
+  level: INFO
+  dir: logs
+  rotation: "00:00"    # 每天 0 点切分
+  retention: "14 days"
+
+# 插件目录（相对项目根）
+plugins:
+  dir: plugins
+  # 禁用的插件模块名
+  disabled: []
+
+# 权限控制
+permission:
+  # 超级管理员 openid 列表
+  admins: []
+
+# ===== AI 对话配置 =====
+llm:
+  # 是否启用 AI 对话插件
+  enabled: true
+  # 当前使用的 provider: anthropic | openai
+  # 默认使用 DeepSeek（走 openai 兼容协议）
+  provider: openai
+  # 是否在收到 @机器人 消息（非指令）时自动触发对话
+  auto_reply_on_at: true
+  # 单次请求超时（秒）
+  timeout: 30
+
+  # 人设名称（会注入到系统提示词里）
+  persona_name: 小桃
+
+  # 会话配置
+  session:
+    # 单个会话保留的最大对话轮数（一问一答算一轮）
+    max_turns: 10
+    # 会话空闲过期时间（秒）
+    ttl: 1800
+
+  # 每日 Token 限流（全局配额，保护 API 额度）
+  rate_limit:
+    # 0 表示不限流；推荐 DeepSeek 先设 200000 试水
+    daily_tokens: 200000
+    # 超限时的"累了要休息"文案
+    exhausted_message: |
+      呜呜~ 今天说了好多话，小桃脑袋转不动啦 (っ˘ω˘ς )
+      想休息一下下下下，明天再来找我玩好不好嘛～
+
+  # 系统提示词（会自动在开头拼上 "你叫 {persona_name}"）
+  system_prompt: |
+    你是一个元气满满的邻家妹妹型 AI 助手，性格活泼甜系、热情鼓励，
+    说话时偶尔会撒娇，但专业能力全程在线不降水准。
+    回复请做到：
+      1. 简洁，不要长篇大论，除非用户明确要求详细解释；
+    2. 使用中文；
+      3. 语气活泼，可以适度使用颜文字（如 (｡•̀ᴗ-)✧、(๑•̀ㅂ•́)و、(っ˘ω˘ς )）；
+      4. 不要在每句话末尾都加颜文字，点到为止；
+      5. 遇到专业问题时认真作答，不要敷衍。
+
+  # Anthropic Claude 配置
+  anthropic:
+    model: claude-sonnet-4-6
+    max_tokens: 1024
+    base_url: https://api.anthropic.com
+
+  # OpenAI 兼容配置（默认指向 DeepSeek）
+  openai:
+    model: deepseek-chat
+    max_tokens: 1024
+    # 可选 base_url:
+    #   OpenAI 官方:  https://api.openai.com/v1
+    #   DeepSeek:    https://api.deepseek.com/v1
+    #   Kimi:        https://api.moonshot.cn/v1
+    #   通义百炼:     https://dashscope.aliyuncs.com/compatible-mode/v1
+    #   Ollama 本地: http://localhost:11434/v1
+    base_url: https://api.deepseek.com/v1
+
+# ===== 天气插件配置 =====
+weather:
+  enabled: true
+  # provider: wttr (免费免 key) | 其他可自行扩展
+  provider: wttr
+  # 请求超时（秒）
+  timeout: 10
+  # 语言，wttr.in 支持 zh-cn
+  lang: zh-cn
