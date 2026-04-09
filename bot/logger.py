@@ -33,4 +33,18 @@ def setup_logger(config: BotConfig) -> None:
         encoding="utf-8",
         enqueue=True,
     )
+
+    # 互动日志：只记录用户↔机器人的对话流水，独立成文件、固定 INFO 级别，
+    # 通过 logger.bind(chat=True).info(...) 触发。
+    logger.add(
+        log_dir / "chat_{time:YYYY-MM-DD}.log",
+        level="INFO",
+        rotation=rotation,
+        retention=retention,
+        encoding="utf-8",
+        enqueue=True,
+        filter=lambda record: record["extra"].get("chat") is True,
+        format="{time:YYYY-MM-DD HH:mm:ss} | {message}",
+    )
+
     logger.info(f"日志系统初始化完成 level={level} dir={log_dir}")

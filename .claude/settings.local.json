@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip --version)",
+      "Bash(pip index:*)",
+      "Bash(pip install:*)",
+      "Read(//c/Users/admin/AppData/Local/Temp/claude/D--workspace-pyCode-pyqbot/dc6782ef-53c8-43ab-be88-66e4ec97a5ac/tasks/**)",
+      "Read(//c/Users/admin/AppData/Local/Temp/claude/D--workspace-pyCode-pyqbot/dc6782ef-53c8-43ab-be88-66e4ec97a5ac/tasks//**)",
+      "Bash(pip download:*)",
+      "Bash(python:*)"
+    ]
+  }
+}
